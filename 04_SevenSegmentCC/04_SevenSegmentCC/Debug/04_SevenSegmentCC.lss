@@ -1,0 +1,284 @@
+
+04_SevenSegmentCC.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000013c  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  0000013c  000001b0  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .stab         000006cc  00000000  00000000  000001b0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  3 .stabstr      00000097  00000000  00000000  0000087c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .comment      0000002f  00000000  00000000  00000913  2**0
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000028  00000000  00000000  00000942  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   000001dc  00000000  00000000  0000096a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 0000013e  00000000  00000000  00000b46  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   000001bf  00000000  00000000  00000c84  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000034  00000000  00000000  00000e44  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    0000012b  00000000  00000000  00000e78  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000169  00000000  00000000  00000fa3  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000018  00000000  00000000  0000110c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 76 00 	call	0xec	; 0xec <main>
+  64:	0c 94 9c 00 	jmp	0x138	; 0x138 <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <DisplayDigit>:
+ --------------------------------------------------------*/
+ 
+static void DisplayDigit(uint8_t num) {
+	
+	// Clear only bits (PB6:PB0)
+	PORTB &= 0x80;
+  6c:	98 b3       	in	r25, 0x18	; 24
+  6e:	90 78       	andi	r25, 0x80	; 128
+  70:	98 bb       	out	0x18, r25	; 24
+	switch (num) {
+  72:	85 30       	cpi	r24, 0x05	; 5
+  74:	39 f1       	breq	.+78     	; 0xc4 <DisplayDigit+0x58>
+  76:	58 f4       	brcc	.+22     	; 0x8e <DisplayDigit+0x22>
+  78:	82 30       	cpi	r24, 0x02	; 2
+  7a:	c1 f0       	breq	.+48     	; 0xac <DisplayDigit+0x40>
+  7c:	18 f4       	brcc	.+6      	; 0x84 <DisplayDigit+0x18>
+  7e:	81 30       	cpi	r24, 0x01	; 1
+  80:	69 f4       	brne	.+26     	; 0x9c <DisplayDigit+0x30>
+  82:	10 c0       	rjmp	.+32     	; 0xa4 <DisplayDigit+0x38>
+  84:	83 30       	cpi	r24, 0x03	; 3
+  86:	b1 f0       	breq	.+44     	; 0xb4 <DisplayDigit+0x48>
+  88:	84 30       	cpi	r24, 0x04	; 4
+  8a:	41 f4       	brne	.+16     	; 0x9c <DisplayDigit+0x30>
+  8c:	17 c0       	rjmp	.+46     	; 0xbc <DisplayDigit+0x50>
+  8e:	87 30       	cpi	r24, 0x07	; 7
+  90:	09 f1       	breq	.+66     	; 0xd4 <DisplayDigit+0x68>
+  92:	e0 f0       	brcs	.+56     	; 0xcc <DisplayDigit+0x60>
+  94:	88 30       	cpi	r24, 0x08	; 8
+  96:	11 f1       	breq	.+68     	; 0xdc <DisplayDigit+0x70>
+  98:	89 30       	cpi	r24, 0x09	; 9
+  9a:	21 f1       	breq	.+72     	; 0xe4 <DisplayDigit+0x78>
+		// Print 0 on 7-segment if num = 0 or num > 9
+		default:
+		case 0:
+			PORTB |= 0x3F;
+  9c:	88 b3       	in	r24, 0x18	; 24
+  9e:	8f 63       	ori	r24, 0x3F	; 63
+  a0:	88 bb       	out	0x18, r24	; 24
+			break;
+  a2:	08 95       	ret
+		
+		case 1:
+			PORTB |= 0x06;
+  a4:	88 b3       	in	r24, 0x18	; 24
+  a6:	86 60       	ori	r24, 0x06	; 6
+  a8:	88 bb       	out	0x18, r24	; 24
+			break;
+  aa:	08 95       	ret
+			
+		case 2:
+			PORTB |= 0x5B;
+  ac:	88 b3       	in	r24, 0x18	; 24
+  ae:	8b 65       	ori	r24, 0x5B	; 91
+  b0:	88 bb       	out	0x18, r24	; 24
+			break;
+  b2:	08 95       	ret
+			
+		case 3:
+			PORTB |= 0x4F;
+  b4:	88 b3       	in	r24, 0x18	; 24
+  b6:	8f 64       	ori	r24, 0x4F	; 79
+  b8:	88 bb       	out	0x18, r24	; 24
+			break;
+  ba:	08 95       	ret
+			
+		case 4:
+			PORTB |= 0x66;
+  bc:	88 b3       	in	r24, 0x18	; 24
+  be:	86 66       	ori	r24, 0x66	; 102
+  c0:	88 bb       	out	0x18, r24	; 24
+			break;
+  c2:	08 95       	ret
+			
+		case 5:
+			PORTB |= 0x6D;
+  c4:	88 b3       	in	r24, 0x18	; 24
+  c6:	8d 66       	ori	r24, 0x6D	; 109
+  c8:	88 bb       	out	0x18, r24	; 24
+			break;
+  ca:	08 95       	ret
+		
+		case 6:
+			PORTB |= 0x7D;
+  cc:	88 b3       	in	r24, 0x18	; 24
+  ce:	8d 67       	ori	r24, 0x7D	; 125
+  d0:	88 bb       	out	0x18, r24	; 24
+			break;
+  d2:	08 95       	ret
+		
+		case 7:
+			PORTB |= 0x07;
+  d4:	88 b3       	in	r24, 0x18	; 24
+  d6:	87 60       	ori	r24, 0x07	; 7
+  d8:	88 bb       	out	0x18, r24	; 24
+			break;
+  da:	08 95       	ret
+		
+		case 8:
+			PORTB |= 0x7F;
+  dc:	88 b3       	in	r24, 0x18	; 24
+  de:	8f 67       	ori	r24, 0x7F	; 127
+  e0:	88 bb       	out	0x18, r24	; 24
+			break;
+  e2:	08 95       	ret
+		
+		case 9:
+			PORTB |= 0x6F;
+  e4:	88 b3       	in	r24, 0x18	; 24
+  e6:	8f 66       	ori	r24, 0x6F	; 111
+  e8:	88 bb       	out	0x18, r24	; 24
+  ea:	08 95       	ret
+
+000000ec <main>:
+/* -------------------- Global Variables --------------------------*/
+/* ----------------------------------------------------------------*/
+
+int main(void) {
+	// PORTB (PB6:PB0) as GPIO Output
+    DDRB = 0x7F;
+  ec:	8f e7       	ldi	r24, 0x7F	; 127
+  ee:	87 bb       	out	0x17, r24	; 23
+	// PORTD (PD3:PD2) as GPIO Input with High-Z
+	DDRD &= ~0x0C;
+  f0:	81 b3       	in	r24, 0x11	; 17
+  f2:	83 7f       	andi	r24, 0xF3	; 243
+  f4:	81 bb       	out	0x11, r24	; 17
+	
+	// Variable that counts the Input
+	uint8_t count = 0;
+	// Show Initial count value (0) on Display
+	DisplayDigit(count);
+  f6:	80 e0       	ldi	r24, 0x00	; 0
+  f8:	0e 94 36 00 	call	0x6c	; 0x6c <DisplayDigit>
+    DDRB = 0x7F;
+	// PORTD (PD3:PD2) as GPIO Input with High-Z
+	DDRD &= ~0x0C;
+	
+	// Variable that counts the Input
+	uint8_t count = 0;
+  fc:	c0 e0       	ldi	r28, 0x00	; 0
+	DisplayDigit(count);
+	
+    while (1) {
+		
+		// Check if SW1 is pressed (Up Count)
+		if( (PIND & 0x04) == 0 ) {
+  fe:	82 99       	sbic	0x10, 2	; 16
+ 100:	0c c0       	rjmp	.+24     	; 0x11a <main+0x2e>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 102:	83 e2       	ldi	r24, 0x23	; 35
+ 104:	94 ef       	ldi	r25, 0xF4	; 244
+ 106:	01 97       	sbiw	r24, 0x01	; 1
+ 108:	f1 f7       	brne	.-4      	; 0x106 <main+0x1a>
+ 10a:	00 c0       	rjmp	.+0      	; 0x10c <main+0x20>
+ 10c:	00 00       	nop
+			// Switch De-bounce delay of 250 ms
+			_delay_ms(250);
+			
+			// Check if count value is less than MAX value (9)
+			// If true increment the count value, otherwise continue
+			if (count < 9 )
+ 10e:	c9 30       	cpi	r28, 0x09	; 9
+ 110:	b0 f7       	brcc	.-20     	; 0xfe <main+0x12>
+				count++;
+ 112:	cf 5f       	subi	r28, 0xFF	; 255
+			else
+				continue; 
+		
+			// Show the count value on Display
+			DisplayDigit(count);
+ 114:	8c 2f       	mov	r24, r28
+ 116:	0e 94 36 00 	call	0x6c	; 0x6c <DisplayDigit>
+		}
+		
+		// Check if SW2 is pressed (Down Count)
+		if( (PIND & 0x08) == 0 ) {
+ 11a:	83 99       	sbic	0x10, 3	; 16
+ 11c:	f0 cf       	rjmp	.-32     	; 0xfe <main+0x12>
+ 11e:	83 e2       	ldi	r24, 0x23	; 35
+ 120:	94 ef       	ldi	r25, 0xF4	; 244
+ 122:	01 97       	sbiw	r24, 0x01	; 1
+ 124:	f1 f7       	brne	.-4      	; 0x122 <main+0x36>
+ 126:	00 c0       	rjmp	.+0      	; 0x128 <main+0x3c>
+ 128:	00 00       	nop
+			// Switch De-bounce delay of 250 ms
+			_delay_ms(250);
+			
+			// Check if count value is greater than MIN value (0)
+			// If true decrement the count value, otherwise continue
+			if (count > 0 )
+ 12a:	cc 23       	and	r28, r28
+ 12c:	41 f3       	breq	.-48     	; 0xfe <main+0x12>
+				count--;
+ 12e:	c1 50       	subi	r28, 0x01	; 1
+			else
+				continue;
+			
+			// Show the count value on Display
+			DisplayDigit(count);
+ 130:	8c 2f       	mov	r24, r28
+ 132:	0e 94 36 00 	call	0x6c	; 0x6c <DisplayDigit>
+ 136:	e3 cf       	rjmp	.-58     	; 0xfe <main+0x12>
+
+00000138 <_exit>:
+ 138:	f8 94       	cli
+
+0000013a <__stop_program>:
+ 13a:	ff cf       	rjmp	.-2      	; 0x13a <__stop_program>

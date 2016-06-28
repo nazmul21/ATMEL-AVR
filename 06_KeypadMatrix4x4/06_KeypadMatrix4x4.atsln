@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "06_KeypadMatrix4x4", "06_KeypadMatrix4x4\06_KeypadMatrix4x4.cproj", "{A090CA05-8D94-4BB0-AE5F-193CA6727994}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A090CA05-8D94-4BB0-AE5F-193CA6727994}.Debug|AVR.ActiveCfg = Debug|AVR
+		{A090CA05-8D94-4BB0-AE5F-193CA6727994}.Debug|AVR.Build.0 = Debug|AVR
+		{A090CA05-8D94-4BB0-AE5F-193CA6727994}.Release|AVR.ActiveCfg = Release|AVR
+		{A090CA05-8D94-4BB0-AE5F-193CA6727994}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,5 +1,5 @@
 # MEGA-AVR
-Codes to work with built-in peripherals of MEGA-AVR series micro-controller
+Codes to work with built-in peripherals of MEGA-AVR series micro-controller.
 Tested on ATMEGA32A @ 1HMz
 
 IDE:

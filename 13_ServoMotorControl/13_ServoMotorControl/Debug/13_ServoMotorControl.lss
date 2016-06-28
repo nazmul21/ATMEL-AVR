@@ -1,0 +1,197 @@
+
+13_ServoMotorControl.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000f4  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  000000f4  00000168  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .stab         000006cc  00000000  00000000  00000168  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  3 .stabstr      00000097  00000000  00000000  00000834  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .comment      0000002f  00000000  00000000  000008cb  2**0
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000020  00000000  00000000  000008fa  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   000001eb  00000000  00000000  0000091a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 000000e1  00000000  00000000  00000b05  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   000001d0  00000000  00000000  00000be6  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000024  00000000  00000000  00000db8  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000121  00000000  00000000  00000ddc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000010  00000000  00000000  00000efd  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 36 00 	call	0x6c	; 0x6c <main>
+  64:	0c 94 78 00 	jmp	0xf0	; 0xf0 <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <main>:
+/* ----------------------------------------------------------------*/ 
+
+int main(void) {
+	
+	// PORTD (PD5) as GPIO Output to generate PWM Signal
+	DDRD |= 0x20;
+  6c:	8d 9a       	sbi	0x11, 5	; 17
+	// 	Set TIMER1 TOP value (ICR1 = 19999)
+	// 	Set Duty Cycle of 1.2 ms (OCR1A = 1200)
+	// 	RESET Count register TCNT1 = 0;
+	// 	Start timer with prescaler 
+	/* ------------------------------------------------------------*/
+	ICR1 = 19999;
+  6e:	8f e1       	ldi	r24, 0x1F	; 31
+  70:	9e e4       	ldi	r25, 0x4E	; 78
+  72:	97 bd       	out	0x27, r25	; 39
+  74:	86 bd       	out	0x26, r24	; 38
+	OCR1A = 1200;
+  76:	80 eb       	ldi	r24, 0xB0	; 176
+  78:	94 e0       	ldi	r25, 0x04	; 4
+  7a:	9b bd       	out	0x2b, r25	; 43
+  7c:	8a bd       	out	0x2a, r24	; 42
+	TCNT1 = 0;
+  7e:	1d bc       	out	0x2d, r1	; 45
+  80:	1c bc       	out	0x2c, r1	; 44
+	TCCR1A = 0x82;
+  82:	82 e8       	ldi	r24, 0x82	; 130
+  84:	8f bd       	out	0x2f, r24	; 47
+	TCCR1B = 0x19;
+  86:	89 e1       	ldi	r24, 0x19	; 25
+  88:	8e bd       	out	0x2e, r24	; 46
+		
+		// Rotate servo motor at its neutral position
+		// A delay is required to move the motor at its desired position 
+		// defined by some ms / 60 degree (check datasheet of servo for exact timing)
+		// Here 2 sec is given 
+		OCR1A = 1200;
+  8a:	80 eb       	ldi	r24, 0xB0	; 176
+  8c:	94 e0       	ldi	r25, 0x04	; 4
+		_delay_ms(2000);
+		
+		// Rotate servo motor 90 degree CCW
+		OCR1A = 600;
+  8e:	48 e5       	ldi	r20, 0x58	; 88
+  90:	52 e0       	ldi	r21, 0x02	; 2
+		// Rotate servo motor at its neutral position
+		OCR1A = 1200;
+		_delay_ms(2000);
+		
+		// Rotate servo motor 90 degree CW
+		OCR1A = 1800;
+  92:	28 e0       	ldi	r18, 0x08	; 8
+  94:	37 e0       	ldi	r19, 0x07	; 7
+		
+		// Rotate servo motor at its neutral position
+		// A delay is required to move the motor at its desired position 
+		// defined by some ms / 60 degree (check datasheet of servo for exact timing)
+		// Here 2 sec is given 
+		OCR1A = 1200;
+  96:	9b bd       	out	0x2b, r25	; 43
+  98:	8a bd       	out	0x2a, r24	; 42
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  9a:	6f e7       	ldi	r22, 0x7F	; 127
+  9c:	7a e1       	ldi	r23, 0x1A	; 26
+  9e:	e6 e0       	ldi	r30, 0x06	; 6
+  a0:	61 50       	subi	r22, 0x01	; 1
+  a2:	70 40       	sbci	r23, 0x00	; 0
+  a4:	e0 40       	sbci	r30, 0x00	; 0
+  a6:	e1 f7       	brne	.-8      	; 0xa0 <main+0x34>
+  a8:	00 c0       	rjmp	.+0      	; 0xaa <main+0x3e>
+  aa:	00 00       	nop
+		_delay_ms(2000);
+		
+		// Rotate servo motor 90 degree CCW
+		OCR1A = 600;
+  ac:	5b bd       	out	0x2b, r21	; 43
+  ae:	4a bd       	out	0x2a, r20	; 42
+  b0:	6f e7       	ldi	r22, 0x7F	; 127
+  b2:	7a e1       	ldi	r23, 0x1A	; 26
+  b4:	e6 e0       	ldi	r30, 0x06	; 6
+  b6:	61 50       	subi	r22, 0x01	; 1
+  b8:	70 40       	sbci	r23, 0x00	; 0
+  ba:	e0 40       	sbci	r30, 0x00	; 0
+  bc:	e1 f7       	brne	.-8      	; 0xb6 <main+0x4a>
+  be:	00 c0       	rjmp	.+0      	; 0xc0 <main+0x54>
+  c0:	00 00       	nop
+		_delay_ms(2000);
+		
+		// Rotate servo motor at its neutral position
+		OCR1A = 1200;
+  c2:	9b bd       	out	0x2b, r25	; 43
+  c4:	8a bd       	out	0x2a, r24	; 42
+  c6:	6f e7       	ldi	r22, 0x7F	; 127
+  c8:	7a e1       	ldi	r23, 0x1A	; 26
+  ca:	e6 e0       	ldi	r30, 0x06	; 6
+  cc:	61 50       	subi	r22, 0x01	; 1
+  ce:	70 40       	sbci	r23, 0x00	; 0
+  d0:	e0 40       	sbci	r30, 0x00	; 0
+  d2:	e1 f7       	brne	.-8      	; 0xcc <main+0x60>
+  d4:	00 c0       	rjmp	.+0      	; 0xd6 <main+0x6a>
+  d6:	00 00       	nop
+		_delay_ms(2000);
+		
+		// Rotate servo motor 90 degree CW
+		OCR1A = 1800;
+  d8:	3b bd       	out	0x2b, r19	; 43
+  da:	2a bd       	out	0x2a, r18	; 42
+  dc:	6f e7       	ldi	r22, 0x7F	; 127
+  de:	7a e1       	ldi	r23, 0x1A	; 26
+  e0:	e6 e0       	ldi	r30, 0x06	; 6
+  e2:	61 50       	subi	r22, 0x01	; 1
+  e4:	70 40       	sbci	r23, 0x00	; 0
+  e6:	e0 40       	sbci	r30, 0x00	; 0
+  e8:	e1 f7       	brne	.-8      	; 0xe2 <main+0x76>
+  ea:	00 c0       	rjmp	.+0      	; 0xec <main+0x80>
+  ec:	00 00       	nop
+  ee:	d3 cf       	rjmp	.-90     	; 0x96 <main+0x2a>
+
+000000f0 <_exit>:
+  f0:	f8 94       	cli
+
+000000f2 <__stop_program>:
+  f2:	ff cf       	rjmp	.-2      	; 0xf2 <__stop_program>

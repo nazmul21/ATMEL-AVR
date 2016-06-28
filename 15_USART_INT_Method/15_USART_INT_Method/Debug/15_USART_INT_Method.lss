@@ -1,0 +1,275 @@
+
+15_USART_INT_Method.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000014e  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         0000000e  00800060  0000014e  000001e2  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000002  0080006e  0080006e  000001f0  2**0
+                  ALLOC
+  3 .stab         000006cc  00000000  00000000  000001f0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  4 .stabstr      00000097  00000000  00000000  000008bc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .comment      0000002f  00000000  00000000  00000953  2**0
+                  CONTENTS, READONLY
+  6 .debug_aranges 00000040  00000000  00000000  00000982  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_info   00000177  00000000  00000000  000009c2  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_abbrev 00000115  00000000  00000000  00000b39  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_line   00000142  00000000  00000000  00000c4e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_frame  00000090  00000000  00000000  00000d90  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_str    00000100  00000000  00000000  00000e20  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_loc    000000ec  00000000  00000000  00000f20  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .debug_ranges 00000030  00000000  00000000  0000100c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+   8:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+   c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  10:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  14:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  18:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  1c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  20:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  24:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  28:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  2c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  30:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  34:	0c 94 80 00 	jmp	0x100	; 0x100 <__vector_13>
+  38:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  3c:	0c 94 94 00 	jmp	0x128	; 0x128 <__vector_15>
+  40:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  44:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  48:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  4c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  50:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	10 e0       	ldi	r17, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	ee e4       	ldi	r30, 0x4E	; 78
+  68:	f1 e0       	ldi	r31, 0x01	; 1
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+  70:	ae 36       	cpi	r26, 0x6E	; 110
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
+
+00000076 <__do_clear_bss>:
+  76:	20 e0       	ldi	r18, 0x00	; 0
+  78:	ae e6       	ldi	r26, 0x6E	; 110
+  7a:	b0 e0       	ldi	r27, 0x00	; 0
+  7c:	01 c0       	rjmp	.+2      	; 0x80 <.do_clear_bss_start>
+
+0000007e <.do_clear_bss_loop>:
+  7e:	1d 92       	st	X+, r1
+
+00000080 <.do_clear_bss_start>:
+  80:	a0 37       	cpi	r26, 0x70	; 112
+  82:	b2 07       	cpc	r27, r18
+  84:	e1 f7       	brne	.-8      	; 0x7e <.do_clear_bss_loop>
+  86:	0e 94 60 00 	call	0xc0	; 0xc0 <main>
+  8a:	0c 94 a5 00 	jmp	0x14a	; 0x14a <_exit>
+
+0000008e <__bad_interrupt>:
+  8e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000092 <USART_Transmit>:
+ *						Return
+		None	
+ -----------------------------------------------------*/
+void USART_Transmit(unsigned char c) {
+	// Put data into buffer, sends the data
+	UDR = c;
+  92:	8c b9       	out	0x0c, r24	; 12
+  94:	08 95       	ret
+
+00000096 <UART_SendString>:
+		unsigned char *				data string to be transmitted
+
+ *						Return
+		None	
+ -----------------------------------------------------*/
+void UART_SendString(unsigned char *str) {
+  96:	cf 93       	push	r28
+  98:	df 93       	push	r29
+  9a:	ec 01       	movw	r28, r24
+	// Loop until get a terminate charater in the string
+	while (*str) {
+  9c:	88 81       	ld	r24, Y
+  9e:	88 23       	and	r24, r24
+  a0:	61 f0       	breq	.+24     	; 0xba <UART_SendString+0x24>
+		// Check if the current transmit is completed 
+		while(!txc);
+  a2:	80 91 60 00 	lds	r24, 0x0060
+  a6:	88 23       	and	r24, r24
+  a8:	e1 f3       	breq	.-8      	; 0xa2 <UART_SendString+0xc>
+		// Clear the user transmit complete flag
+		txc = 0;
+  aa:	10 92 60 00 	sts	0x0060, r1
+		// Transmit a single charater
+		USART_Transmit(*str);
+  ae:	89 91       	ld	r24, Y+
+  b0:	0e 94 49 00 	call	0x92	; 0x92 <USART_Transmit>
+ *						Return
+		None	
+ -----------------------------------------------------*/
+void UART_SendString(unsigned char *str) {
+	// Loop until get a terminate charater in the string
+	while (*str) {
+  b4:	88 81       	ld	r24, Y
+  b6:	81 11       	cpse	r24, r1
+  b8:	f4 cf       	rjmp	.-24     	; 0xa2 <UART_SendString+0xc>
+		// Transmit a single charater
+		USART_Transmit(*str);
+		// Increment the string location by 1
+		str++;
+	}
+}
+  ba:	df 91       	pop	r29
+  bc:	cf 91       	pop	r28
+  be:	08 95       	ret
+
+000000c0 <main>:
+	//	Enable double speed mode (U2X = 1)
+	// 	Enable Rx, Tx complete INT, Enable Rx, Tx module
+	//	USART as asynchorous mode, No Parity (UPM1:0 = 0), One STOP bit (USBS = 0)
+	//	Char Size 8 bit (UCSZ2:0 = 3)
+	/* ------------------------------------------------------------*/
+	UBRRH = 0;
+  c0:	10 bc       	out	0x20, r1	; 32
+	UBRRL = 12;
+  c2:	8c e0       	ldi	r24, 0x0C	; 12
+  c4:	89 b9       	out	0x09, r24	; 9
+	UCSRA |= 0x02;
+  c6:	59 9a       	sbi	0x0b, 1	; 11
+	UCSRB |= 0xD8;
+  c8:	8a b1       	in	r24, 0x0a	; 10
+  ca:	88 6d       	ori	r24, 0xD8	; 216
+  cc:	8a b9       	out	0x0a, r24	; 10
+	UCSRC |= 0x86;
+  ce:	80 b5       	in	r24, 0x20	; 32
+  d0:	86 68       	ori	r24, 0x86	; 134
+  d2:	80 bd       	out	0x20, r24	; 32
+	
+	// Enable Global Interrupt (BIT7 of SREG)
+	sei();
+  d4:	78 94       	sei
+	
+	// Send a string to PC
+	UART_SendString((unsigned char *)"Hello World!");
+  d6:	81 e6       	ldi	r24, 0x61	; 97
+  d8:	90 e0       	ldi	r25, 0x00	; 0
+  da:	0e 94 4b 00 	call	0x96	; 0x96 <UART_SendString>
+	
+    while (1) {
+		// Check if a data is received from PC
+		if ( rxc == 1 ) {
+  de:	80 91 6e 00 	lds	r24, 0x006E
+  e2:	81 30       	cpi	r24, 0x01	; 1
+  e4:	e1 f7       	brne	.-8      	; 0xde <main+0x1e>
+			// Clear the user receive complete flag
+			rxc = 0;
+  e6:	10 92 6e 00 	sts	0x006E, r1
+			// Check if the current transmit is completed
+			if (txc == 1) {
+  ea:	80 91 60 00 	lds	r24, 0x0060
+  ee:	81 30       	cpi	r24, 0x01	; 1
+  f0:	b1 f7       	brne	.-20     	; 0xde <main+0x1e>
+				// Clear the user transmit complete flag
+				txc = 0;
+  f2:	10 92 60 00 	sts	0x0060, r1
+				// Transmit the received data as echo
+				USART_Transmit(r_data);
+  f6:	80 91 6f 00 	lds	r24, 0x006F
+  fa:	0e 94 49 00 	call	0x92	; 0x92 <USART_Transmit>
+  fe:	ef cf       	rjmp	.-34     	; 0xde <main+0x1e>
+
+00000100 <__vector_13>:
+	// Put data into buffer, sends the data
+	UDR = c;
+}
+
+// USART Receive Complete INT Service Routine
+ISR(USART_RXC_vect) {
+ 100:	1f 92       	push	r1
+ 102:	0f 92       	push	r0
+ 104:	0f b6       	in	r0, 0x3f	; 63
+ 106:	0f 92       	push	r0
+ 108:	11 24       	eor	r1, r1
+ 10a:	8f 93       	push	r24
+	// Check if receive complete INT flag is set
+	if (UCSRA & (1<<RXC)) {
+ 10c:	5f 9b       	sbis	0x0b, 7	; 11
+ 10e:	06 c0       	rjmp	.+12     	; 0x11c <__vector_13+0x1c>
+		// Get received data from buffer
+		r_data = UDR;
+ 110:	8c b1       	in	r24, 0x0c	; 12
+ 112:	80 93 6f 00 	sts	0x006F, r24
+		// Set the user receive complete flag
+		rxc = 1;
+ 116:	81 e0       	ldi	r24, 0x01	; 1
+ 118:	80 93 6e 00 	sts	0x006E, r24
+	}
+} 
+ 11c:	8f 91       	pop	r24
+ 11e:	0f 90       	pop	r0
+ 120:	0f be       	out	0x3f, r0	; 63
+ 122:	0f 90       	pop	r0
+ 124:	1f 90       	pop	r1
+ 126:	18 95       	reti
+
+00000128 <__vector_15>:
+
+// USART Transmit Complete INT Service Routine
+ISR(USART_TXC_vect) {
+ 128:	1f 92       	push	r1
+ 12a:	0f 92       	push	r0
+ 12c:	0f b6       	in	r0, 0x3f	; 63
+ 12e:	0f 92       	push	r0
+ 130:	11 24       	eor	r1, r1
+ 132:	8f 93       	push	r24
+	// Check if transmit complete INT flag is set
+	if (UCSRA & (1<<TXC)) {
+ 134:	5e 9b       	sbis	0x0b, 6	; 11
+ 136:	03 c0       	rjmp	.+6      	; 0x13e <__vector_15+0x16>
+		// Set the user transmit complete flag
+		txc = 1;
+ 138:	81 e0       	ldi	r24, 0x01	; 1
+ 13a:	80 93 60 00 	sts	0x0060, r24
+	}
+ 13e:	8f 91       	pop	r24
+ 140:	0f 90       	pop	r0
+ 142:	0f be       	out	0x3f, r0	; 63
+ 144:	0f 90       	pop	r0
+ 146:	1f 90       	pop	r1
+ 148:	18 95       	reti
+
+0000014a <_exit>:
+ 14a:	f8 94       	cli
+
+0000014c <__stop_program>:
+ 14c:	ff cf       	rjmp	.-2      	; 0x14c <__stop_program>

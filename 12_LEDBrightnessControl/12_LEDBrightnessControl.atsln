@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "12_LEDBrightnessControl", "12_LEDBrightnessControl\12_LEDBrightnessControl.cproj", "{DC1B375A-22CF-453C-93BB-52DA0D11CCBE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DC1B375A-22CF-453C-93BB-52DA0D11CCBE}.Debug|AVR.ActiveCfg = Debug|AVR
+		{DC1B375A-22CF-453C-93BB-52DA0D11CCBE}.Debug|AVR.Build.0 = Debug|AVR
+		{DC1B375A-22CF-453C-93BB-52DA0D11CCBE}.Release|AVR.ActiveCfg = Release|AVR
+		{DC1B375A-22CF-453C-93BB-52DA0D11CCBE}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

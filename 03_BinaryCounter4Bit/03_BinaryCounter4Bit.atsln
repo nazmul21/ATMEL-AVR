@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "03_BinaryCounter4Bit", "03_BinaryCounter4Bit\03_BinaryCounter4Bit.cproj", "{89D0D220-EA4F-4C00-9283-1CE2BF9F8A22}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{89D0D220-EA4F-4C00-9283-1CE2BF9F8A22}.Debug|AVR.ActiveCfg = Debug|AVR
+		{89D0D220-EA4F-4C00-9283-1CE2BF9F8A22}.Debug|AVR.Build.0 = Debug|AVR
+		{89D0D220-EA4F-4C00-9283-1CE2BF9F8A22}.Release|AVR.ActiveCfg = Release|AVR
+		{89D0D220-EA4F-4C00-9283-1CE2BF9F8A22}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

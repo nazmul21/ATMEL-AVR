@@ -1,0 +1,177 @@
+
+03_BinaryCounter4Bit.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000ca  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  000000ca  0000013e  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .stab         000006cc  00000000  00000000  00000140  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  3 .stabstr      00000097  00000000  00000000  0000080c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .comment      0000002f  00000000  00000000  000008a3  2**0
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000020  00000000  00000000  000008d2  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000178  00000000  00000000  000008f2  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000102  00000000  00000000  00000a6a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   0000019d  00000000  00000000  00000b6c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000024  00000000  00000000  00000d0c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000127  00000000  00000000  00000d30  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000067  00000000  00000000  00000e57  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000010  00000000  00000000  00000ebe  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 36 00 	call	0x6c	; 0x6c <main>
+  64:	0c 94 63 00 	jmp	0xc6	; 0xc6 <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <main>:
+/* ----------------------------------------------------------------*/
+
+int main(void) {
+	
+	// PORTD (PD3:PD2) as GPIO Input with High-Z
+    DDRD &= ~0x0C;
+  6c:	81 b3       	in	r24, 0x11	; 17
+  6e:	83 7f       	andi	r24, 0xF3	; 243
+  70:	81 bb       	out	0x11, r24	; 17
+	// PORTC (PC3:PC0) as GPIO Output
+	DDRC = 0x0F;
+  72:	8f e0       	ldi	r24, 0x0F	; 15
+  74:	84 bb       	out	0x14, r24	; 20
+	
+	// Variable that counts the Input
+	uint8_t count = 0;
+  76:	80 e0       	ldi	r24, 0x00	; 0
+	
+    while (1) {
+		
+		// Check if SW1 is pressed (Up Count)
+		if ( (PIND & 0x04) == 0 ) {
+  78:	82 99       	sbic	0x10, 2	; 16
+  7a:	11 c0       	rjmp	.+34     	; 0x9e <main+0x32>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  7c:	e3 e2       	ldi	r30, 0x23	; 35
+  7e:	f4 ef       	ldi	r31, 0xF4	; 244
+  80:	31 97       	sbiw	r30, 0x01	; 1
+  82:	f1 f7       	brne	.-4      	; 0x80 <main+0x14>
+  84:	00 c0       	rjmp	.+0      	; 0x86 <main+0x1a>
+  86:	00 00       	nop
+			// Switch De-bounce delay of 250 ms
+			_delay_ms(250);
+			
+			// Check if count value is less than MAX value (15 for 4-bit)
+			// If true increment the count value, otherwise continue
+			if (count < 15)
+  88:	8f 30       	cpi	r24, 0x0F	; 15
+  8a:	b0 f7       	brcc	.-20     	; 0x78 <main+0xc>
+				count = count + 1;
+  8c:	8f 5f       	subi	r24, 0xFF	; 255
+			else
+				continue; 
+			
+			// Clear PC3:PC0
+			PORTC &= 0xF0;
+  8e:	95 b3       	in	r25, 0x15	; 21
+  90:	90 7f       	andi	r25, 0xF0	; 240
+  92:	95 bb       	out	0x15, r25	; 21
+			// Show the count value to Output PORT (PC3:PC0) 
+			PORTC |= (count & 0x0F);
+  94:	95 b3       	in	r25, 0x15	; 21
+  96:	28 2f       	mov	r18, r24
+  98:	2f 70       	andi	r18, 0x0F	; 15
+  9a:	92 2b       	or	r25, r18
+  9c:	95 bb       	out	0x15, r25	; 21
+		}
+		
+		// Check if SW2 is pressed (Down Count)
+		if ( (PIND & 0x08) == 0 ) {
+  9e:	83 99       	sbic	0x10, 3	; 16
+  a0:	eb cf       	rjmp	.-42     	; 0x78 <main+0xc>
+  a2:	e3 e2       	ldi	r30, 0x23	; 35
+  a4:	f4 ef       	ldi	r31, 0xF4	; 244
+  a6:	31 97       	sbiw	r30, 0x01	; 1
+  a8:	f1 f7       	brne	.-4      	; 0xa6 <main+0x3a>
+  aa:	00 c0       	rjmp	.+0      	; 0xac <main+0x40>
+  ac:	00 00       	nop
+			// Switch De-bounce delay of 250 ms
+			_delay_ms(250);
+			
+			// Check if count value is greater than MIN value (0)
+			// If true decrement the count value, otherwise continue
+			if (count > 0)
+  ae:	88 23       	and	r24, r24
+  b0:	19 f3       	breq	.-58     	; 0x78 <main+0xc>
+				count = count - 1;
+  b2:	81 50       	subi	r24, 0x01	; 1
+			else
+				continue;
+			
+			
+			// Clear Only bits (PC3:PC0)
+			PORTC &= 0xF0;
+  b4:	95 b3       	in	r25, 0x15	; 21
+  b6:	90 7f       	andi	r25, 0xF0	; 240
+  b8:	95 bb       	out	0x15, r25	; 21
+			// Show the count value to Output PORT (PC3:PC0) 
+			PORTC |= (count & 0x0F);
+  ba:	95 b3       	in	r25, 0x15	; 21
+  bc:	28 2f       	mov	r18, r24
+  be:	2f 70       	andi	r18, 0x0F	; 15
+  c0:	92 2b       	or	r25, r18
+  c2:	95 bb       	out	0x15, r25	; 21
+  c4:	d9 cf       	rjmp	.-78     	; 0x78 <main+0xc>
+
+000000c6 <_exit>:
+  c6:	f8 94       	cli
+
+000000c8 <__stop_program>:
+  c8:	ff cf       	rjmp	.-2      	; 0xc8 <__stop_program>
